@@ -1,8 +1,14 @@
 import Foundation
 import Combine
+import UIKit
 
 #if canImport(FirebaseAuth)
 import FirebaseAuth
+#endif
+
+#if canImport(GoogleSignIn)
+import GoogleSignIn
+import GoogleSignInSwift
 #endif
 
 // MARK: - Auth Errors
@@ -13,11 +19,12 @@ enum HaguruAuthError: LocalizedError {
     case signUpFailed(String)
     case signOutFailed(String)
     case userNotFound
+    case googleSignInCancelled
 
     var errorDescription: String? {
         switch self {
         case .notConfigured:
-            return "Firebase が設定されていません。セットアップ手順を確認してください。"
+            return "GoogleService-Info.plist がプロジェクトに追加されていません。\nFirebase Console からダウンロードして Xcode に追加してください。"
         case .signInFailed(let msg):
             return "ログインに失敗しました：\(msg)"
         case .signUpFailed(let msg):
@@ -26,6 +33,8 @@ enum HaguruAuthError: LocalizedError {
             return "サインアウトに失敗しました：\(msg)"
         case .userNotFound:
             return "ユーザー情報が見つかりませんでした"
+        case .googleSignInCancelled:
+            return "Google ログインがキャンセルされました"
         }
     }
 }
@@ -39,11 +48,11 @@ final class AuthService: ObservableObject {
     @Published private(set) var currentUserID: String?
     @Published private(set) var isAuthenticated: Bool = false
 
-    private init() {
-        // リスナーは Firebase 設定後に App 側から setupAuthStateListener() を呼ぶ
-    }
+    private init() {}
 
-    /// Firebase.configure() 後に一度だけ呼ぶこと
+    // MARK: - Setup
+
+    /// FirebaseApp.configure() の直後に呼ぶ
     func setupAuthStateListener() {
         #if canImport(FirebaseAuth)
         guard FirebaseService.shared.isConfigured else { return }
@@ -55,6 +64,8 @@ final class AuthService: ObservableObject {
         }
         #endif
     }
+
+    // MARK: - Email / Password
 
     func signIn(email: String, password: String) async throws {
         #if canImport(FirebaseAuth)
@@ -89,10 +100,45 @@ final class AuthService: ObservableObject {
         #endif
     }
 
+    // MARK: - Google Sign-In
+
+    func signInWithGoogle() async throws -> String {
+        #if canImport(GoogleSignIn) && canImport(FirebaseAuth)
+        guard FirebaseService.shared.isConfigured else {
+            throw HaguruAuthError.notConfigured
+        }
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+              let rootVC = windowScene.windows.first?.rootViewController else {
+            throw HaguruAuthError.signInFailed("ウィンドウが見つかりませんでした")
+        }
+
+        let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootVC)
+        guard let idToken = result.user.idToken?.tokenString else {
+            throw HaguruAuthError.signInFailed("Google トークンの取得に失敗しました")
+        }
+        let credential = GoogleAuthProvider.credential(
+            withIDToken: idToken,
+            accessToken: result.user.accessToken.tokenString
+        )
+        let authResult = try await Auth.auth().signIn(with: credential)
+        currentUserID = authResult.user.uid
+        isAuthenticated = true
+        return authResult.user.uid
+        #else
+        throw HaguruAuthError.notConfigured
+        #endif
+    }
+
+    // MARK: - Sign Out
+
     func signOut() throws {
         #if canImport(FirebaseAuth)
         do {
             try Auth.auth().signOut()
+            #if canImport(GoogleSignIn)
+            GIDSignIn.sharedInstance.signOut()
+            #endif
             currentUserID = nil
             isAuthenticated = false
         } catch {
@@ -104,11 +150,20 @@ final class AuthService: ObservableObject {
         #endif
     }
 
-    // MARK: - Dev/Preview helpers
+    // MARK: - Dev / Preview helpers
+
+    /// Firebase 未設定時の開発用バイパス（実機テスト用）
+    func signInAsDev() {
+        currentUserID = "dev-\(UUID().uuidString.prefix(8))"
+        isAuthenticated = true
+    }
+
     func simulateSignIn(userID: String) {
         currentUserID = userID
         isAuthenticated = true
     }
+
+    // MARK: - Private
 
     private func localizedMessage(from error: Error) -> String {
         #if canImport(FirebaseAuth)

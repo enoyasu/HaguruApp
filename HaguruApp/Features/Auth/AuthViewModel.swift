@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import SwiftUI
 
 @MainActor
 final class AuthViewModel: ObservableObject {
@@ -10,7 +11,6 @@ final class AuthViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private let authService = AuthService.shared
-    private let userRepo = UserRepository()
 
     // MARK: - Validation
 
@@ -32,7 +32,7 @@ final class AuthViewModel: ObservableObject {
         return !isValidEmail(email) ? "メールアドレスの形式が正しくありません" : nil
     }
 
-    // MARK: - Sign In
+    // MARK: - Sign In (email)
 
     func signIn(onSuccess: @escaping (String) -> Void) async {
         guard isSignInValid else { return }
@@ -49,7 +49,7 @@ final class AuthViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Sign Up
+    // MARK: - Sign Up (email)
 
     func signUp(onSuccess: @escaping (String) -> Void) async {
         guard isSignUpValid else { return }
@@ -61,6 +61,29 @@ final class AuthViewModel: ObservableObject {
             onSuccess(uid)
         } catch {
             errorMessage = error.localizedDescription
+        }
+    }
+
+    // MARK: - Google Sign-In
+
+    func signInWithGoogle(onSuccess: @escaping (String) -> Void) async {
+        isLoading = true
+        errorMessage = nil
+        defer { isLoading = false }
+        do {
+            let uid = try await authService.signInWithGoogle()
+            onSuccess(uid)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    // MARK: - Dev bypass（Firebase 未設定時のテスト用）
+
+    func signInAsDev(onSuccess: @escaping (String) -> Void) {
+        authService.signInAsDev()
+        if let uid = authService.currentUserID {
+            onSuccess(uid)
         }
     }
 

@@ -51,8 +51,26 @@ struct LoginView: View {
                         }
                     }
 
+                    OrDivider()
+
+                    GoogleSignInButton {
+                        Task {
+                            await vm.signInWithGoogle { uid in
+                                Task { await appState.loadUser(uid: uid) }
+                            }
+                        }
+                    }
+
                     TextLinkButton(title: "アカウントをお持ちでない方はこちら") {
                         appState.screen = .signUp
+                    }
+                }
+
+                if !FirebaseService.shared.isConfigured {
+                    DevBypassSection {
+                        vm.signInAsDev { uid in
+                            Task { await appState.loadUser(uid: uid) }
+                        }
                     }
                 }
 

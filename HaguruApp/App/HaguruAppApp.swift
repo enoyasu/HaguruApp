@@ -1,5 +1,9 @@
 import SwiftUI
 
+#if canImport(GoogleSignIn)
+import GoogleSignIn
+#endif
+
 @main
 struct HaguruAppApp: App {
     @StateObject private var appState = AppState.shared
@@ -18,10 +22,14 @@ struct HaguruAppApp: App {
                 .environmentObject(appState)
                 .environmentObject(authService)
                 .onAppear {
-                    // ③ Combine 購読 → Auth 状態変化で自動ルーティング
                     appState.onAppear()
-                    // ④ UIKit Appearance は onAppear で設定（iOS 26 では init より安全）
                     configureAppearance()
+                }
+                // Google Sign-In の OAuth コールバック URL を処理
+                .onOpenURL { url in
+                    #if canImport(GoogleSignIn)
+                    _ = GIDSignIn.sharedInstance.handle(url)
+                    #endif
                 }
         }
     }
