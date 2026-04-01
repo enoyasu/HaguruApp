@@ -40,10 +40,11 @@ final class AuthService: ObservableObject {
     @Published private(set) var isAuthenticated: Bool = false
 
     private init() {
-        setupAuthStateListener()
+        // リスナーは Firebase 設定後に App 側から setupAuthStateListener() を呼ぶ
     }
 
-    private func setupAuthStateListener() {
+    /// Firebase.configure() 後に一度だけ呼ぶこと
+    func setupAuthStateListener() {
         #if canImport(FirebaseAuth)
         guard FirebaseService.shared.isConfigured else { return }
         Auth.auth().addStateDidChangeListener { [weak self] _, user in

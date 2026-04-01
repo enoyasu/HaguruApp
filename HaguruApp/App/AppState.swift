@@ -42,17 +42,28 @@ final class AppState: ObservableObject {
     private var pairListener: ListenerRegistration?
     #endif
 
+    private var authCancellable: AnyCancellable?
+
     private init() {}
 
     // MARK: - Entry
 
+    /// App 起動直後（Firebase 設定・Auth リスナー登録後）に一度だけ呼ぶ
     func onAppear() {
-        let auth = AuthService.shared
-        guard auth.isAuthenticated, let uid = auth.currentUserID else {
-            screen = .onboarding
-            return
-        }
-        Task { await loadUser(uid: uid) }
+        // Auth 状態の変化を Combine で購読 → Firebase キャッシュ復元も拾える
+        authCancellable = AuthService.shared.$isAuthenticated
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isAuthenticated in
+                guard let self else { return }
+                if isAuthenticated, let uid = AuthService.shared.currentUserID {
+                    Task { await self.loadUser(uid: uid) }
+                } else {
+                    // ログアウト / 未認証 → onboarding へ
+                    if self.screen != .onboarding {
+                        self.screen = .onboarding
+                    }
+                }
+            }
     }
 
     // MARK: - Load User & Route
