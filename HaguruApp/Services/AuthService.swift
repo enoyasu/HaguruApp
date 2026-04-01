@@ -47,7 +47,7 @@ final class AuthService: ObservableObject {
     func setupAuthStateListener() {
         #if canImport(FirebaseAuth)
         guard FirebaseService.shared.isConfigured else { return }
-        Auth.auth().addStateDidChangeListener { [weak self] _, user in
+        _ = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             Task { @MainActor [weak self] in
                 self?.currentUserID = user?.uid
                 self?.isAuthenticated = user != nil
