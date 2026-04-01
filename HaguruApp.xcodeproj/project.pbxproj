@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B0FB1A2E0F7C06B2001CFA04 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B0FB1A2E0F7C06B2001CFA02 /* FirebaseAuth */; };
-		B0FB1A2E0F7C06B2001CFA05 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B0FB1A2E0F7C06B2001CFA03 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +55,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0FB1A2E0F7C06B2001CFA04 /* FirebaseAuth in Frameworks */,
-				B0FB1A2E0F7C06B2001CFA05 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,8 +115,6 @@
 			);
 			name = HaguruApp;
 			packageProductDependencies = (
-				B0FB1A2E0F7C06B2001CFA02 /* FirebaseAuth */,
-				B0FB1A2E0F7C06B2001CFA03 /* FirebaseFirestore */,
 			);
 			productName = HaguruApp;
 			productReference = B02A71322F7C06B2001CD565 /* HaguruApp.app */;
@@ -204,9 +198,6 @@
 			);
 			mainGroup = B02A71292F7C06B2001CD565;
 			minimizedProjectReferenceProxies = 1;
-			packages = (
-				B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B02A71332F7C06B2001CD565 /* Products */;
 			projectDirPath = "";
@@ -598,27 +589,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B0FB1A2E0F7C06B2001CFA02 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		B0FB1A2E0F7C06B2001CFA03 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B02A712A2F7C06B2001CD565 /* Project object */;
