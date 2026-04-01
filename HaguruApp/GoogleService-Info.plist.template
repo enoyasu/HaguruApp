@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!--
+  ──────────────────────────────────────────────────────────────────────
+  このファイルは GoogleService-Info.plist のテンプレートです。
+  実際に使用するには:
+
+  1. https://console.firebase.google.com でプロジェクトを作成
+  2. iOS アプリを追加（Bundle ID: com.yasu.HaguruApp）
+  3. GoogleService-Info.plist をダウンロード
+  4. このファイルと同じフォルダに配置（.plist.template は削除）
+  5. .gitignore により GoogleService-Info.plist は Git 管理外です
+
+  ──────────────────────────────────────────────────────────────────────
+-->
+<dict>
+  <key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+  <string>YOUR_AD_UNIT_ID</string>
+  <key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+  <string>YOUR_AD_UNIT_ID</string>
+  <key>API_KEY</key>
+  <string>YOUR_API_KEY</string>
+  <key>AUTH_DOMAIN</key>
+  <string>YOUR_PROJECT_ID.firebaseapp.com</string>
+  <key>BUNDLE_ID</key>
+  <string>com.yasu.HaguruApp</string>
+  <key>CLIENT_ID</key>
+  <string>YOUR_CLIENT_ID.apps.googleusercontent.com</string>
+  <key>DATABASE_URL</key>
+  <string>https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com</string>
+  <key>GCM_SENDER_ID</key>
+  <string>YOUR_SENDER_ID</string>
+  <key>GOOGLE_APP_ID</key>
+  <string>1:YOUR_SENDER_ID:ios:YOUR_HASH</string>
+  <key>IS_ADS_ENABLED</key>
+  <false/>
+  <key>IS_ANALYTICS_ENABLED</key>
+  <false/>
+  <key>IS_APPINVITE_ENABLED</key>
+  <true/>
+  <key>IS_GCM_ENABLED</key>
+  <true/>
+  <key>IS_SIGNIN_ENABLED</key>
+  <true/>
+  <key>PLIST_VERSION</key>
+  <string>1</string>
+  <key>PROJECT_ID</key>
+  <string>YOUR_PROJECT_ID</string>
+  <key>REVERSED_CLIENT_ID</key>
+  <string>com.googleusercontent.apps.YOUR_CLIENT_ID</string>
+  <key>STORAGE_BUCKET</key>
+  <string>YOUR_PROJECT_ID.appspot.com</string>
+</dict>
+</plist>

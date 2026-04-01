@@ -6,6 +6,9 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B02A71422F7C06B9001CD565 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0FB1A2E0F7C06B2001CFA04 /* FirebaseAuth in Frameworks */,
+				B0FB1A2E0F7C06B2001CFA05 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,8 @@
 			);
 			name = HaguruApp;
 			packageProductDependencies = (
+				B0FB1A2E0F7C06B2001CFA02 /* FirebaseAuth */,
+				B0FB1A2E0F7C06B2001CFA03 /* FirebaseFirestore */,
 			);
 			productName = HaguruApp;
 			productReference = B02A71322F7C06B2001CD565 /* HaguruApp.app */;
@@ -195,6 +202,9 @@
 			);
 			mainGroup = B02A71292F7C06B2001CD565;
 			minimizedProjectReferenceProxies = 1;
+			packages = (
+				B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B02A71332F7C06B2001CD565 /* Products */;
 			projectDirPath = "";
@@ -400,6 +410,9 @@
 				DEVELOPMENT_TEAM = 5K5YCF5332;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				INFOPLIST_KEY_CFBundleDisplayName = "はぐる";
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "水やりや気持ちのお知らせに使用します";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -432,6 +445,9 @@
 				DEVELOPMENT_TEAM = 5K5YCF5332;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				INFOPLIST_KEY_CFBundleDisplayName = "はぐる";
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "水やりや気持ちのお知らせに使用します";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -578,6 +594,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B0FB1A2E0F7C06B2001CFA02 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B0FB1A2E0F7C06B2001CFA03 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0FB1A2E0F7C06B2001CFA01 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B02A712A2F7C06B2001CD565 /* Project object */;
 }
