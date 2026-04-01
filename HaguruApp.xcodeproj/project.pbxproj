@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0FB1A2E0F7C06B2001CFA04 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B0FB1A2E0F7C06B2001CFA02 /* FirebaseAuth */; };
+		B0FB1A2E0F7C06B2001CFA05 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B0FB1A2E0F7C06B2001CFA03 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
